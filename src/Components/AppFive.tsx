@@ -1,29 +1,7 @@
 import { useState } from "react";
-import { TaskType, TodolistFour } from "./TodolistFour";
+
 import { v1 } from "uuid";
-
-/* 
-Реализуем множественный todolist
--инкапсулируем данные в объект
--чтобы каждый тудулст мог на оснве свойг
-на основе значения слова фильтр - сделать фильтрацию
-- фукции заночсим в return
-
--фильтрация работает независимо 
-
--отдельное хранение тасок для двух тудулистов
-
--делаем map для тудулистов двух
--let tasksForTodolist = tasks - переносим в return;
-
--переносим filter в return он должен быть индивидуальным
--исправлякм захордкодженное состояние фильтра чтобы работала фильтрация
--передать в тудулист:todolistID
-
--прописываем логику в changeFilter
--прописываем логику в removeTask
-*/
-
+import { TodolistFive } from "./TodolistFive";
 
 export type FilterValuesType = "all" | "completed" | "active"
 type TodolistType = {
@@ -33,7 +11,7 @@ type TodolistType = {
 }
 
 
-export function AppFour() {
+export function AppFive() {
     function removeTask(id: string, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let filteredTasks = tasks.filter(t => t.id !== id);
@@ -106,7 +84,7 @@ export function AppFour() {
     });
 
     return (
-        <div className="AppFour Box">
+        <div className="AppFive Box">
             {todolists.map((tl) => {
                 let tasksForTodolist = tasksObj[tl.id];
 
@@ -117,7 +95,7 @@ export function AppFour() {
                     tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
                 }
 
-                return <TodolistFour
+                return <TodolistFive
                     key={tl.id}
                     id={tl.id}
                     title={tl.title}
