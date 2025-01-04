@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
 import { FilterValuesType } from "./AppFive"
+import { AddItemForm } from "./copm_TodolistFive/AddItemForm"
 
 
 export type TaskType = {
@@ -23,39 +24,6 @@ type PropsType = {
 }
 
 export function TodolistFive(props: PropsType) {
-    const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [error, setError] = useState<string | null>(null); //для добавления ошибки, перерисовки ошибки
-
-    const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)/*  e.currentTarget.value - значение из input*/
-    };
-
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null) //убрираем надпись которая выскакивает при ошибке если начал вводить буквы
-        if (e.ctrlKey && e.key === "Enter") {
-            addTask();
-        }
-    };
-
-    const addTask = () => {
-        //защита от ввода  пустой строки
-        if (newTaskTitle.trim() !== "") { //защита  от введения пустой строки
-            props.addTask(newTaskTitle.trim(), props.id);
-            setNewTaskTitle("");
-        } else {
-            setError("Title is required")
-        }
-
-        /* 
-        //такой вариант удобно использовать  если много подрят проверок if идет
-        if (newTaskTitle.trim() === "") {
-            return
-        }
-
-        props.addTask(newTaskTitle.trim());
-        setNewTaskTitle(""); */
-    };
-
     const onAllCilckHandler = () => {
         props.changeFilter("all", props.id);
     }
@@ -69,45 +37,41 @@ export function TodolistFive(props: PropsType) {
         props.removeTodolist(props.id);
     }
 
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
+    }
+
 
     return (
         <div>
             <h3>{props.title} <button onClick={removeTodolist}>x</button></h3>
+            <AddItemForm addItem={addTask} />
+            <ul>
+                {props.tasks.map(t => {
+
+                    //вынесена функция не самый вверх так как кнопка создается для каждого элемента    
+                    const onRemoveHandler = () => {
+                        props.removeTask(t.id, props.id)
+                    }
+                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        props.changeTaskStatus(t.id, e.currentTarget.checked, props.id) //получение чекнутого значения
+                    }
+
+                    return (
+                        <li key={t.id} className={t.isDone ? "is-done" : ""}> {/* если таска не выполнена- обесцвечивание */}
+                            <input type="checkbox"
+                                onChange={onChangeHandler}
+                                checked={t.isDone} />
+                            <span>{t.title}</span>
+                            <button onClick={onRemoveHandler}>x</button>
+                        </li>
+                    )
+                })}
+            </ul>
             <div>
-                <input value={newTaskTitle}
-                    onChange={onNewTitleChangeHandler}
-                    onKeyUp={onKeyPressHandler}
-                    className={error ? "error": ""}  /* если есть ошибка ввода пустой строки отрисуй  */
-                />
-                <button onClick={addTask}>+</button>
-                {error && <div className="error-message">{error}</div>} {/* если есть ошибка ввода пустой строки отрисуй */}
-                <ul>
-                    {props.tasks.map(t => {
-
-                        //вынесена функция не самый вверх так как кнопка создается для каждого элемента    
-                        const onRemoveHandler = () => {
-                            props.removeTask(t.id, props.id)
-                        }
-                        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                            props.changeTaskStatus(t.id, e.currentTarget.checked, props.id) //получение чекнутого значения
-                        }
-
-                        return (
-                            <li key={t.id} className={t.isDone ? "is-done" : ""}> {/* если таска не выполнена- обесцвечивание */}
-                                <input type="checkbox"
-                                    onChange={onChangeHandler}
-                                    checked={t.isDone} />
-                                <span>{t.title}</span>
-                                <button onClick={onRemoveHandler}>x</button>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <div>
-                    <button className={props.filter === 'all'? "active-filter" : ""} onClick={onAllCilckHandler}>All</button>
-                    <button className={props.filter === 'active'? "active-filter" : ""} onClick={onActiveCilckHandler}>Active</button>
-                    <button className={props.filter === 'completed'? "active-filter" : ""} onClick={onCompletedCilckHandler}>Completed</button>
-                </div>
+                <button className={props.filter === 'all' ? "active-filter" : ""} onClick={onAllCilckHandler}>All</button>
+                <button className={props.filter === 'active' ? "active-filter" : ""} onClick={onActiveCilckHandler}>Active</button>
+                <button className={props.filter === 'completed' ? "active-filter" : ""} onClick={onCompletedCilckHandler}>Completed</button>
             </div>
         </div>
     )

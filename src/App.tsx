@@ -24,7 +24,7 @@ function App() {
       <AppThree/> */}
       {/* <p>sprint 2</p>  
       <AppFour/> */}
-      <p>sprint 2 Material UI</p> 
+      <p>sprint 2 week 2 lesson 6 </p> 
       <AppFive/>
     </div>
   );

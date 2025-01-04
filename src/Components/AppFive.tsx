@@ -1,7 +1,7 @@
 import { useState } from "react";
-
 import { v1 } from "uuid";
-import { TodolistFive } from "./TodolistFive";
+import { TaskType, TodolistFive } from "./TodolistFive";
+import { AddItemForm } from "./copm_TodolistFive/AddItemForm";
 
 export type FilterValuesType = "all" | "completed" | "active"
 type TodolistType = {
@@ -9,6 +9,16 @@ type TodolistType = {
     title: string,
     filter: FilterValuesType
 }
+
+type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
+//add todolist
+//делаем функцию AddItemForm для добавления nelekbcnjd
+//AddItemForm - в другую компоненту, универсвотная компонета добавляет таску, тудулист
+//в App <input/> <button>x</button> меняем  на подключение AddItemForm
+//добавляем addTodoList для добавдения тудулиста
 
 
 export function AppFive() {
@@ -56,8 +66,8 @@ export function AppFive() {
 
 
     let [todolists, setTodolists] = useState<Array<TodolistType>>([
-        { id: todolistId1, title: "What to learn", filter: "active" },
-        { id: todolistId2, title: "What to buy", filter: "completed" }
+        { id: todolistId1, title: "What to learn", filter: "all" },
+        { id: todolistId2, title: "What to buy", filter: "all" }
     ]);
 
     let removeTodolist = (todolistId: string) => {
@@ -69,7 +79,7 @@ export function AppFive() {
     }
 
 
-    let [tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState<TasksStateType>({
         [todolistId1]: [
             { id: v1(), title: "CSS", isDone: true },
             { id: v1(), title: "JS", isDone: true },
@@ -83,8 +93,27 @@ export function AppFive() {
         ]   
     });
 
+    const addTodoList = (title: string) => {
+        let todoList: TodolistType = {
+            id: v1(),
+            filter: 'all',
+            title: title
+        }
+        setTodolists([todoList, ...todolists])
+        setTasks({
+            ...tasksObj,
+            [todoList.id]: []
+        })
+    }
+
+
+
+
     return (
         <div className="AppFive Box">
+{            <AddItemForm addItem={addTodoList}/>
+}
+            
             {todolists.map((tl) => {
                 let tasksForTodolist = tasksObj[tl.id];
 
