@@ -19,7 +19,8 @@ type TasksStateType = {
 //AddItemForm - в другую компоненту, универсвотная компонета добавляет таску, тудулист
 //в App <input/> <button>x</button> меняем  на подключение AddItemForm
 //добавляем addTodoList для добавдения тудулиста
-
+//создаем функцию которая делает input из спана
+//добавляем EditableSpan
 
 export function AppFive() {
     function removeTask(id: string, todolistId: string) {
@@ -48,7 +49,15 @@ export function AppFive() {
             task.isDone = isDone;
             setTasks({...tasksObj});
         }
-        
+    }
+
+    function changeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+        let tasks = tasksObj[todolistId];
+        let task = tasks.find(t => t.id === taskId) //true или false
+        if (task) {
+            task.title = newTitle;
+            setTasks({...tasksObj});
+        }
     }
 
     //передаем через пропсы в todolist там через кнопуи фуекция булет вызвана
@@ -76,6 +85,14 @@ export function AppFive() {
 
         delete tasksObj[todolistId];
         setTasks({...tasksObj});
+    }
+
+    const changeTodolistTitle = (taskId: string, newTitle: string) => {
+        const todolist = todolists.find(tl => tl.id === taskId);
+        if (todolist) {
+            todolist.title = newTitle;
+            setTodolists([...todolists]);
+        }
     }
 
 
@@ -133,8 +150,10 @@ export function AppFive() {
                     changeFilter={changeFilter}
                     addTask={addTask}
                     changeTaskStatus={changeStatus}
+                    changeTaskTitle={changeTaskTitle}
                     filter={tl.filter}
                     removeTodolist={removeTodolist}
+                    changeTodolistTitle={changeTodolistTitle}
                 />
             })}
         </div>
