@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { v1 } from "uuid";
-import { TaskType, TodolistSix } from "./TodolistSix";
-import { AddItemForm } from "./copm_TodolistSix/AddItemForm";
+
+
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Container, Grid2, Paper } from "@mui/material";
+import { TaskType, TodolistSeven } from "./TodolistSeven";
+import { AddItemForm } from "./copm_TodolistSeven/AddItemForm";
+
 
 
 
@@ -30,7 +33,7 @@ type TasksStateType = {
 //создаем функцию которая делает input из спана
 //добавляем EditableSpan
 
-export function AppSix() {
+export function AppSeven() {
     function removeTask(id: string, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let filteredTasks = tasks.filter(t => t.id !== id);
@@ -139,7 +142,7 @@ export function AppSix() {
 
 
     return (
-        <div className="AppSix">
+        <div className="AppSeven">
             <AppBar position="static">
                 <Toolbar>
                     <IconButton color="inherit">
@@ -166,7 +169,7 @@ export function AppSix() {
 
                         return <Grid2>
                             <Paper style={{padding: "10px"}}>
-                                <TodolistSix
+                                <TodolistSeven
                                     key={tl.id}
                                     id={tl.id}
                                     title={tl.title}

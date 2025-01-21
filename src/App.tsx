@@ -3,6 +3,7 @@ import { AppFive } from './Components/AppFive';
 import { AppFour } from './Components/AppFour';
 import { AppOne } from './Components/AppOne';
 import { AppPre } from './Components/AppPre';
+import { AppSeven } from './Components/AppSeven';
 import { AppSix } from './Components/AppSix';
 import { AppThree } from './Components/AppThree';
 import { AppTwo } from './Components/AppTwo';
@@ -28,7 +29,9 @@ function App() {
       {/* <p>sprint 2 week 2 lesson 6 </p> 
       <AppFive/> */}
   {/*     <p>sprint 2 week 3 lesson 7 </p>  */}
-      <AppSix/>
+ {/*      <AppSix/> */}
+      {/*     <p>sprint 2 week 3 lesson 8 </p>  */}
+      <AppSeven/>
     </div>
   );
 }

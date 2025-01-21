@@ -1,9 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react"
 import { FilterValuesType } from "./AppFive"
-import { AddItemForm } from "./copm_TodolistSix/AddItemForm"
-import { EditableSpan } from "./copm_TodolistSix/EditableSpan"
+
 import { Button, Checkbox, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
+import { EditableSpan } from "./copm_TodolistSeven/EditableSpan"
+import { AddItemForm } from "./copm_TodolistSeven/AddItemForm"
 
 
 
@@ -30,7 +31,7 @@ type PropsType = {
     changeTodolistTitle: (taskId: string, newTitle: string) => void
 }
 
-export function TodolistSix(props: PropsType) {
+export function TodolistSeven(props: PropsType) {
     const onAllCilckHandler = () => {
         props.changeFilter("all", props.id);
     }
