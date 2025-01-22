@@ -15,7 +15,7 @@ import { AddItemForm } from "./copm_TodolistSeven/AddItemForm";
 
 
 export type FilterValuesType = "all" | "completed" | "active"
-type TodolistType = {
+export type TodolistType = {
     id: string,
     title: string,
     filter: FilterValuesType
